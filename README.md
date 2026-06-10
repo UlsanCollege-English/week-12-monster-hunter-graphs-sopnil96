@@ -2,101 +2,70 @@
 # Week 12: Monster Hunter Graphs
 
 ## Student
-
-Name:
-
-Student ID:
+Name: Istiak Sopnil
+Student ID: sopnil96
 
 ## Summary
-
-Write 3–6 lines explaining what this assignment does.
-
-Example questions to answer:
-
-- What kind of graph did you build?
-- What do the locations represent?
-- What do the routes represent?
-- What was the hardest function?
+This assignment builds undirected and weighted graphs to represent monster sighting locations and the routes connecting them. Locations are nodes in the graph and routes are edges between them. The weighted graph stores danger scores for each route, keeping the lowest score if duplicates appear. The most connected location is found by counting neighbors, and urgent sightings are prioritized using a min-heap. The hardest function was `build_weighted_hunter_map` due to handling duplicate routes and validating danger scores.
 
 ## Approach
-
-Explain your approach in bullets.
-
-- `build_hunter_map`:
-- `build_weighted_hunter_map`:
-- `map_summary`:
-- `most_connected_location`:
-- `priority_hunt_order`:
+- `build_hunter_map`: Looped over each edge and added both directions to the adjacency list, skipping duplicates by checking if the neighbor already exists.
+- `build_weighted_hunter_map`: Same as above but stored danger scores in a nested dictionary. Raised `ValueError` for non-positive scores and kept the lowest score for duplicate routes.
+- `map_summary`: Counted keys for locations and summed all neighbor list lengths divided by 2 for undirected routes.
+- `most_connected_location`: Used `min()` with a key that sorts by negative neighbor count first, then alphabetically to break ties.
+- `priority_hunt_order`: Used `heapq.heapify` on the reports list and popped locations one by one from lowest to highest priority number.
 
 ## Complexity
 
-Complete this section.
-
 ### `build_hunter_map`
-
-- Time:
-- Space:
-- Why:
+- Time: O(E)
+- Space: O(V + E)
+- Why: Loops over each edge once; stores all vertices and edges in the adjacency list.
 
 ### `build_weighted_hunter_map`
-
-- Time:
-- Space:
-- Why:
+- Time: O(E)
+- Space: O(V + E)
+- Why: Loops over each edge once; stores all vertices and weighted edges in nested dictionaries.
 
 ### `map_summary`
-
-- Time:
-- Space:
-- Why:
+- Time: O(V + E)
+- Space: O(1)
+- Why: Sums the length of all neighbor lists which covers all edges; no extra storage needed.
 
 ### `most_connected_location`
-
-- Time:
-- Space:
-- Why:
+- Time: O(V)
+- Space: O(1)
+- Why: Scans all locations once to find the maximum degree.
 
 ### `priority_hunt_order`
-
-- Time:
-- Space:
-- Why:
+- Time: O(n log n)
+- Space: O(n)
+- Why: `heapq.heapify` is O(n) and each `heappop` is O(log n) for n items.
 
 ## Edge-Case Checklist
-
-Check the cases you handled.
-
-- [ ] Empty graph
-- [ ] One route
-- [ ] Duplicate routes
-- [ ] Disconnected locations
-- [ ] Tie for most connected location
-- [ ] Positive weighted routes
-- [ ] Invalid zero or negative danger score
-- [ ] Empty priority report list
+- [x] Empty graph
+- [x] One route
+- [x] Duplicate routes
+- [x] Disconnected locations
+- [x] Tie for most connected location
+- [x] Positive weighted routes
+- [x] Invalid zero or negative danger score
+- [x] Empty priority report list
 
 ## Tests
-
 Paste the result of your test run.
-
 ```bash
 pytest -q
 ```
-
 Result:
-
 ```text
 
 ```
 
 ## Assistance & Sources
-
-AI used? Yes / No
-
+AI used? Yes
 If yes, what did it help with?
-
--
+- Implementation guidance, complexity analysis, and edge case handling.
 
 Other sources used:
-
--
+- Python Official Documentation for `heapq`
